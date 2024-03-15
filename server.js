@@ -6,6 +6,7 @@ const upload = multer({ dest: "uploads/" });
 const path = require("path");
 const { mergePdfs } = require("./merge");
 app.use("/static", express.static("public"));
+const baseurl = "https://pdf-merger-javascript.onrender.com";
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "templates/index.html"));
@@ -21,7 +22,7 @@ app.post("/merge", upload.array("pdfs", 2), async function (req, res, next) {
     path.join(__dirname, req.files[0].path),
     path.join(__dirname, req.files[1].path),pdf1,pdf2
   );
-  res.redirect(`http://localhost:${port}/static/${d}.pdf`);
+  res.redirect(`${baseurl}/static/${d}.pdf`);
 });
 
 app.listen(port, () => {
